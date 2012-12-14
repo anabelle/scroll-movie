@@ -1,0 +1,8 @@
+.movie > img,
+.movie > video {
+	width: auto;
+	height: auto;
+	position: fixed;
+	top:40px;
+	left:25%;
+}
