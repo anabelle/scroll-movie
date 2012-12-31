@@ -1,3 +1,7 @@
+body {
+	background-color: #000;
+}
+
 .movie > img,
 .movie > video {
 	width: auto;

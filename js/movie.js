@@ -105,7 +105,7 @@ $(document).ready(function(){
 
 	var imageSeqLoader = new ProgressiveImageSequence( "img/vid/still{index}.jpg" , stills , {
 		indexSize: 4,
-		initialStep: 16,
+		initialStep: 1,
 		onProgress: handleLoadProgress,
 		onComplete: handleLoadComplete,
 		stopAt: 1
@@ -131,11 +131,6 @@ $(document).ready(function(){
 		var nearestIndex = imageSeqLoader.nearestIndex;
 		if ( nearestIndex < 0 ) nearestIndex = 0;
 
-		if ( nearestIndex >= stills - 10 ){
-			console.log("The End");
-			window.scrollTo( 0, 0);
-		}
-
 		var $img = $(img);
 		var src;
 		if ( !!img ) {
@@ -147,7 +142,7 @@ $(document).ready(function(){
 		}
 	}
 
-	$('body').append('<div id="loading-bar" style="position:fixed; bottom:0; left:0; background-color: #DF0012; background-color: rgba(223,0,18,0.5); height: 10px;"></div>');
+	$('body').append('<div id="loading-bar" style="position:fixed; top:0; left:0; background-color: #CCC; background-color: rgba(223,0,18,0.5); height: 10px;"></div>');
 	
 	function handleLoadProgress() {
 		var progress = imageSeqLoader.getLoadProgress() * 100;
@@ -179,6 +174,10 @@ $(document).ready(function(){
 
 	scrollHandler = function () {
 		window.location.hash = $win.scrollTop();
+		if ( $win.innerHeight() + $win.scrollTop() >= $("body").height() ) {
+			console.log("The End");
+			window.scrollTo( 0, 0);
+		}
 	};
 
 });
