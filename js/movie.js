@@ -154,7 +154,7 @@ $(document).ready(function(){
 		}
 	}
 
-	$('body').append('<div id="loading-bar" style="position:fixed; top:0; left:0; background-color: #CCC; background-color: rgba(0,0,0,0.5); height: 10px;"></div>');
+	$('body').append('<div id="loading-bar" style="position:fixed; top:0; left:0; background-color: #CCC; background-color: rgba(255,255,255,0.4); height: 10px;"></div>');
 	
 	function handleLoadProgress() {
 		var progress = imageSeqLoader.getLoadProgress() * 100;
