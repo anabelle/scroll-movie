@@ -1,5 +1,6 @@
 body {
 	background-color: #000;
+	margin-right: -10px;
 }
 
 .movie > img,
@@ -8,5 +9,5 @@ body {
 	height: auto;
 	position: fixed;
 	top:40px;
-	left:25%;
+	left:20%;
 }

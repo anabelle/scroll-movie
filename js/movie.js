@@ -26,6 +26,15 @@ $(document).ready(function(){
 	}
 
 	// handling resize and scroll events
+
+	function locateFrames() {
+		var frameWidth = 720;// $('.movie > img').outerWidth();
+		var frameHeight = 405;
+		var padFrame = ( windowWidth - frameWidth ) / 2;
+		var padFrameTop = ( windowHeight - frameHeight ) / 2;
+		$('.movie > img').css( 'left', padFrame ).css( 'top', padFrameTop );
+	}
+	locateFrames();
 	
 	function calculateDimensions() {
 		windowWidth = $win.width();
@@ -37,11 +46,13 @@ $(document).ready(function(){
 	function handleResize() {
 		calculateDimensions();
 		resizeBackgroundImage();
+		locateFrames();
 		handleScroll();
 	}
 
 	function handleScroll() {
 		targetPosition = $win.scrollTop() / scrollHeight;
+		console.log( targetPosition );
 	}
 	
 	// main render loop
@@ -63,6 +74,7 @@ $(document).ready(function(){
 			render(currentPosition);
 		}
 	  requestAnimFrame(animloop);
+	  // console.log( requestAnimFrame );
 	}
 
 
@@ -175,8 +187,8 @@ $(document).ready(function(){
 	scrollHandler = function () {
 		window.location.hash = $win.scrollTop();
 		if ( $win.innerHeight() + $win.scrollTop() >= $("body").height() ) {
-			console.log("The End");
 			window.scrollTo( 0, 0);
+			console.log("The End");
 		}
 	};
 
