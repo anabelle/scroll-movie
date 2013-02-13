@@ -20,11 +20,6 @@ $(document).ready(function(){
 	var $hotspotElements = $('[data-position]');
 
 
-	if( hashname ){
-		window.scrollTo( 0, hashname );
-		console.log( hashname );
-	}
-
 	// handling resize and scroll events
 
 	function locateFrames() {
@@ -52,7 +47,7 @@ $(document).ready(function(){
 
 	function handleScroll() {
 		targetPosition = $win.scrollTop() / scrollHeight;
-		console.log( targetPosition );
+		// console.log( targetPosition );
 	}
 	
 	// main render loop
@@ -185,11 +180,17 @@ $(document).ready(function(){
 	});
 
 	scrollHandler = function () {
-		window.location.hash = $win.scrollTop();
+		window.location.hash = targetPosition;
 		if ( $win.innerHeight() + $win.scrollTop() >= $("body").height() ) {
 			window.scrollTo( 0, 0);
 			console.log("The End");
 		}
 	};
+
+	if( hashname ){
+		targetPosition = hashname;
+		animloop();
+		console.log( hashname );
+	}
 
 });
