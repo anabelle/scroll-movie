@@ -1,8 +1,12 @@
 /*! Scroll Movie JS */
 $(document).ready(function(){
 
+	$(document).bind("mousewheel", function() {
+		return false;
+	});
+
 	// Movie Settings
-	var stills = 10000;
+	var stills = 10075;
 
 	var $doc = $(document);
 	var $win = $(window);
@@ -20,12 +24,16 @@ $(document).ready(function(){
 	var $hotspotElements = $('[data-position]');
 
 
-	if( hashname ){
-		window.scrollTo( 0, hashname );
-		console.log( hashname );
-	}
-
 	// handling resize and scroll events
+
+	function locateFrames() {
+		var frameWidth = 720;// $('.movie > img').outerWidth();
+		var frameHeight = 405;
+		var padFrame = ( windowWidth - frameWidth ) / 2;
+		var padFrameTop = ( windowHeight - frameHeight ) / 2;
+		$('.movie > img').css( 'left', padFrame ).css( 'top', padFrameTop );
+	}
+	locateFrames();
 	
 	function calculateDimensions() {
 		windowWidth = $win.width();
@@ -37,11 +45,13 @@ $(document).ready(function(){
 	function handleResize() {
 		calculateDimensions();
 		resizeBackgroundImage();
+		locateFrames();
 		handleScroll();
 	}
 
 	function handleScroll() {
 		targetPosition = $win.scrollTop() / scrollHeight;
+		// console.log( targetPosition );
 	}
 	
 	// main render loop
@@ -58,11 +68,12 @@ $(document).ready(function(){
 
 
 	function animloop(){
-		if ( Math.floor(currentPosition*5000) != Math.floor(targetPosition*5000) ) {
-			currentPosition += (targetPosition - currentPosition) / 5;
+		if ( Math.floor(currentPosition*10000) != Math.floor(targetPosition*10000) ) {
+			currentPosition += (targetPosition - currentPosition) / 10;
 			render(currentPosition);
 		}
 	  requestAnimFrame(animloop);
+	  // console.log( requestAnimFrame );
 	}
 
 
@@ -104,7 +115,7 @@ $(document).ready(function(){
 	// video handling
 
 	var imageSeqLoader = new ProgressiveImageSequence( "img/vid/still{index}.jpg" , stills , {
-		indexSize: 4,
+		indexSize: 5,
 		initialStep: 1,
 		onProgress: handleLoadProgress,
 		onComplete: handleLoadComplete,
@@ -142,7 +153,7 @@ $(document).ready(function(){
 		}
 	}
 
-	$('body').append('<div id="loading-bar" style="position:fixed; top:0; left:0; background-color: #CCC; background-color: rgba(223,0,18,0.5); height: 10px;"></div>');
+	$('body').append('<div id="loading-bar" style="position:fixed; top:0; left:0; background-color: #EB9FB0; background-color: rgba(235,159,176,1); height: 10px;"></div>');
 	
 	function handleLoadProgress() {
 		var progress = imageSeqLoader.getLoadProgress() * 100;
@@ -169,15 +180,23 @@ $(document).ready(function(){
 			clearTimeout(scrollTimeout);
 			scrollTimeout = null;
 		}
-		scrollTimeout = setTimeout(scrollHandler, 250);
+		scrollTimeout = setTimeout(scrollHandler, 100);
 	});
 
 	scrollHandler = function () {
-		window.location.hash = $win.scrollTop();
+		// window.location.hash = currentPosition;
 		if ( $win.innerHeight() + $win.scrollTop() >= $("body").height() ) {
-			console.log("The End");
 			window.scrollTo( 0, 0);
+			console.log("The End");
 		}
 	};
+
+	if( hashname ){
+		targetPosition = hashname;
+		currentPosition = targetPosition-1;
+		// window.scrollTo( targetPosition * 1000 );
+		animloop();
+		console.log( hashname );
+	}
 
 });

@@ -17,7 +17,7 @@ function ProgressiveImageSequence( imgpath , count ,  options ) {
 
 
 	var defaultOptions = {
-		indexSize: 4 ,
+		indexSize: 5 ,
 		initialStep: 64 ,
 		onComplete: null ,
 		onProgress: null ,
@@ -172,7 +172,7 @@ function ProgressiveImageSequence( imgpath , count ,  options ) {
 	function finished() {
 		isComplete = true;
 		callback(pref.onComplete,this);
-		//console.log( "All images loaded" , numLoaded, 'of', myself.length );
+		console.log( "All images loaded" , numLoaded, 'of', myself.length );
 	}
 
 
