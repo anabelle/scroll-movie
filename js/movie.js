@@ -1,8 +1,27 @@
 /*! Scroll Movie JS */
 $(document).ready(function(){
 
+	// Ignoramos el scroll del mouse
+
 	$(document).bind("mousewheel", function() {
 		return false;
+	});
+
+	// Mapeamos left y right a up y down
+	$(document).keydown(function(e){
+		console.log( e.keyCode );
+    	// left arrow
+	    if ((e.keyCode || e.which) == 37 || (e.keyCode || e.which) == 38 )
+	    {   
+	    	e.preventDefault();
+	    	window.scrollTo(0, $(document).scrollTop() - 30);	    
+	    }
+	    // right arrow
+	    if ((e.keyCode || e.which) == 39 || (e.keyCode || e.which) == 40 )
+	    {
+	    	e.preventDefault();
+	    	window.scrollTo(0, 30 + $(document).scrollTop()); 
+	   	}   
 	});
 
 	// Movie Settings
@@ -153,7 +172,7 @@ $(document).ready(function(){
 		}
 	}
 
-	$('body').append('<div id="loading-bar" style="position:fixed; top:0; left:0; background-color: #EB9FB0; background-color: rgba(235,159,176,1); height: 10px;"></div>');
+	$('body').append('<div id="loading-bar" style="position:fixed; top:0; left:0; background-color: #EB9FB0; background-color: rgba(235,159,176,1); height: 15px;"></div>');
 	
 	function handleLoadProgress() {
 		var progress = imageSeqLoader.getLoadProgress() * 100;
